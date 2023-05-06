@@ -1,5 +1,5 @@
 # node-tile
-Package to ring & talk to your Tile
+Package to ring & talk to your Tile Tracker
 
 This project is the result of countless hours of reverse engineering the Tile bluetooth protocol.
 If you like my work, give this repository a `⭐` or consider [Buying Me A Coffee ☕](https://www.buymeacoffee.com/lesleydk)

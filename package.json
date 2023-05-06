@@ -1,14 +1,28 @@
 {
   "name": "node-tile",
-  "version": "1.0.0",
-  "description": "Package to ring & talk to your Tile",
+  "version": "1.0.1",
+  "description": "Package to ring & talk to your Tile Tracker",
   "type": "module",
-  "main": "index.js",
+  "author": "Lesley De Keyser",
+  "license": "ISC",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "types": "./lib/cjs/types/index.d.ts",
+  "main": "./lib/cjs/index.js",
+  "files": [
+    "lib/**/*"
+  ],
+  "keywords": [
+    "Tile",
+    "Tracker",
+    "Device",
+    "Bluetooth"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lesleyxyz/node-tile.git"
+  },
   "dependencies": {
     "@abandonware/noble": "^1.9.2-15",
     "bleno": "npm:@abandonware/bleno@^0.5.1-4",
@@ -17,5 +31,17 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.13"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/esm/types/index.d.ts",
+        "default": "./lib/esm/index.mjs"
+      },
+      "require": {
+        "types": "./lib/cjs/types/index.d.ts",
+        "default": "./lib/cjs/index.js"
+      }
+    }
   }
 }
