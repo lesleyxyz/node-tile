@@ -1,12 +1,18 @@
 {
   "name": "node-tile",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Package to ring & talk to your Tile Tracker",
   "type": "module",
   "author": "Lesley De Keyser",
   "license": "ISC",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "tsc",
+    "clean": "shx rm -rf ./lib",
+    "start": "npm run compile && node dist/index.js",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc -p ./configs/tsconfig.esm.json && shx mv lib/esm/index.js lib/esm/index.mjs",
+    "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
+    "prepack": "npm run build"
   },
   "types": "./lib/cjs/types/index.d.ts",
   "main": "./lib/cjs/index.js",
@@ -30,7 +36,8 @@
     "ts-node": "^10.9.1"
   },
   "devDependencies": {
-    "@types/node": "^18.11.13"
+    "@types/node": "^18.11.13",
+    "shx": "^0.3.4"
   },
   "exports": {
     ".": {
