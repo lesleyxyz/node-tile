@@ -13,7 +13,10 @@ This package uses noble to connect to bluetooth.
 This means you require a bluetooth adapter.
 
 ## Running without root/sudo (Linux-specific)
-To use this package on linux, you will have to run the script as root to get access to your bluetooth adapter, or run the following command:
+To use this package on linux, you will have to run the script as root to get access to your bluetooth adapter.
+Otherwise you will get the error that the noble adapter's state is unauthorized.
+
+You can also fix this by running the following command:
 
 ```sh
 sudo setcap cap_net_raw+eip $(eval readlink -f `which node`)
