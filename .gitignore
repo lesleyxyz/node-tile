@@ -1,0 +1,6 @@
+dist/
+.env
+node_modules/
+*.tgz
+lib/
+test.ts
