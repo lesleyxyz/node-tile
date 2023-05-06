@@ -1,6 +1,7 @@
 import noble from '@abandonware/noble'
-import {TileService, TileVolume, UserService} from './src/index.js'
+import {TileService, TileVolume, UserService} from 'node-tile'
 
+// We have to log into Tile to get the authkeys of your tile
 let userService = new UserService("<your-tile-email>", "<your-tile-password>")
 await userService.login()
 
@@ -19,6 +20,7 @@ noble.on('stateChange', state => {
 noble.on('discover', async peripheral => {
 	let address = peripheral.address.split(":").join("")
 	
+	// If we find ANY tile in our account, we continue
 	let tile = tiles.filter(t => t.id.startsWith(address))[0]
 	if(!tile){
 		console.log("Non-tile", address)
@@ -28,6 +30,7 @@ noble.on('discover', async peripheral => {
 	console.log("TILE", peripheral.address, peripheral.rssi, tile)
 	noble.stopScanning()
 
+	// Create the service based on bluetooth device & tile from our account
 	let service = new TileService(peripheral, tile)
 
 	service.on("singleTab", _ => console.log("Got single tab!"))
@@ -36,7 +39,6 @@ noble.on('discover', async peripheral => {
 	service.on("debug", msg => console.log("debug", msg))
 
 	await service.connect()
-    await service.programBionicBirdieSong()
 	await service.sendRinger(TileVolume.MED)
 });
 

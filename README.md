@@ -40,7 +40,7 @@ Make your tile ring:
 await service.sendRinger(TileVolume.MED)
 ```
 
-Program :
+Program the default ring tone:
 ```
 await service.sendRinger(TileVolume.MED)
 ```
@@ -77,3 +77,6 @@ service.on("debug", msg => console.log("debug", msg))
 - Tile Slim 2022
 - Tile Pro 2022
 - Tile Mate 2022
+
+This package may not work with all Tiles as the protocol changes over time.
+Also the level of success may vary depending on your bluetooth adapter and tile.
