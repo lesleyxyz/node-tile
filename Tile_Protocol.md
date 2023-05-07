@@ -1,5 +1,6 @@
 # Tile Protocol
 This document will contain an attempt to explain how the communcation works.
+If you want to help research & reverse engineer the protocol further, see the `reseach/` folder
 
 ## Communication methods
 Tile uses their own authentication for their tile.

@@ -1,2 +1,4 @@
 .env
 test.ts
+research/
+node_modules/
