@@ -3,13 +3,12 @@ import { ReadyTransaction, TileDataInformation, toaToResp, txFactory, TimeTransa
 import { HighDuty, LowDuty } from "../models/TcuParams.js";
 import { TileVolume } from "../models/TileVolume.js";
 import { Tile } from "../models/Tile.js";
-import { Peripheral, Service, Characteristic, Descriptor } from '@abandonware/noble'
 import { CryptoUtils } from '../utils/CryptoUtils.js'
 import EventEmitter from "events";
 
 const sleep = ms => new Promise(r => setTimeout(r, ms))
 
-let BleGattMode = {
+export const BleGattMode = {
     DISCOVERED: 0,
     CONNECTING: 1,
     CONNECTED: 2,
@@ -22,7 +21,12 @@ let BleGattMode = {
     DISCONNECTED: 9
 }
 
-export class TileService extends EventEmitter {
+export const FEED_SERVICE = "0000feed-0000-1000-8000-00805f9b34fb"
+export const MEP_COMMAND_CHAR = "9d410018-35d6-f4dd-ba60-e7bd8dc491c0"
+export const MEP_RESPONSE_CHAR = "9d410019-35d6-f4dd-ba60-e7bd8dc491c0"
+
+
+export class AbstractTileService extends EventEmitter {
     // Tile Info
     tile: Tile
     tileId: string
@@ -36,13 +40,9 @@ export class TileService extends EventEmitter {
     randT: Buffer
     sresT: Buffer
 
+    macAddress: string
     advertisingInterval: number = 0
     bleGattMode: number = BleGattMode.DISCONNECTED
-    peripheral: Peripheral
-    macAddress: string
-    feedService: Service
-    mepCommandChar: Characteristic
-    mepResponseChar: Characteristic
     toaMepProcessor: ToaMepProcessor
     toaProcessor: ToaProcessor
     initialTdiTransaction: TdiTransaction
@@ -52,12 +52,9 @@ export class TileService extends EventEmitter {
     packetListeners = {}
     onConnectedListener = _ => {}
 
-    constructor(peripheral: Peripheral, tile: Tile){
+    constructor(tile: Tile){
         super()
         this.tile = tile
-        this.macAddress = peripheral.address
-        this.peripheral = peripheral
-        this.bleGattMode = BleGattMode.DISCONNECTED
     }
 
     async connect(rssiTimeout = 2000){
@@ -66,15 +63,6 @@ export class TileService extends EventEmitter {
         this.toaProcessor = new ToaProcessor()
         this.ringingStateMachine = new RingingStateMachine()
 
-        this.emit("debug", `Connecting ${this.macAddress}`)
-        await this.peripheral.connectAsync()
-        
-        setInterval(async _=> {
-            this.emit("rssi", await this.peripheral.updateRssiAsync())
-        }, rssiTimeout)
-
-        this.peripheral.once('rssiUpdate', rssi => this.emit("rssi", rssi));
-
         this.emit("debug", `Connected ${this.macAddress}`)
         await this.discoverServices()
         this.emit("debug", `Discovered services ${this.macAddress}`)
@@ -82,26 +70,7 @@ export class TileService extends EventEmitter {
     }
 
     async discoverServices(){
-        const services = await this.peripheral.discoverServicesAsync([]);
-        this.feedService = services.filter(s => s.uuid == "feed")[0]
-
-        const characteristics = await this.feedService.discoverCharacteristicsAsync([]);
-        this.mepCommandChar = characteristics.filter(c => c.uuid == "9d41001835d6f4ddba60e7bd8dc491c0")[0]
-        this.mepResponseChar = characteristics.filter(c => c.uuid == "9d41001935d6f4ddba60e7bd8dc491c0")[0]
-
-        if(!this.isMepCmdOrRespSet()){
-            throw "BLE Characteristics not found :( is this a Tile?"
-        }
-
-        this.randA = CryptoUtils.generateRandomBytes(14)
-        this.toaMepProcessor = new ToaMepProcessor(CryptoUtils.generateRandomBytes(4))
-
-        let descriptors = await this.mepResponseChar.discoverDescriptorsAsync()
-        let descriptor = descriptors[0]
-
-        descriptor.once('valueWrite', this.startTdiSequence.bind(this));
-        this.mepResponseChar.on('data', this.onMepResponse.bind(this))
-        await descriptor.writeValueAsync(Buffer.from([0x01, 0x00]))
+        throw Error("Not implemented")
     }
 
     getAuthKeyHmac(){
@@ -112,14 +81,14 @@ export class TileService extends EventEmitter {
         throw "TODO Unsupported Operation: generateAdvancedHmac"
     }
 
-    isMepCmdOrRespSet(){
-        return this.mepCommandChar || this.mepResponseChar
+    isMepCmdOrRespSet(): boolean {
+        throw Error("Not implemented")
     }
 
     onMepResponse(data: Buffer) {
         let responseType = this.toaMepProcessor.getResponseType(data)
         if(responseType == "NOT_VALID"){
-            this.emit("debug", `Error Invalid Response ${data}`)
+            this.emit("debug", `Error Invalid Response ${data.toString('hex')}`)
             return
         }
 
@@ -437,7 +406,11 @@ export class TileService extends EventEmitter {
     async handleCloseChannelTransaction(tx: ChannelTransaction) {
         this.emit("debug", `Error: Closing channel`)
         this.toaProcessor.channelOpened = false
-        await this.peripheral.disconnectAsync()
+        this._disconnect()
+    }
+
+    async _disconnect(){
+        throw Error("Not implemented")
     }
 
     setToaProcessorReady(){
@@ -512,6 +485,8 @@ export class TileService extends EventEmitter {
     }
 
     async startTdiSequence(){
+        this.emit("debug", `Starting Tile Data Information sequence`)
+
         let tx = await this.sendPacketPreAuthAsync(19, new TdiTransaction(1)) as TdiTransaction
         if(tx.prefix == 32){
             throw `TDI Error ${tx.getError()}`
@@ -586,7 +561,7 @@ export class TileService extends EventEmitter {
 
         let toSend = tx.getFullPacket()
         this.emit("debug", `char TX ${toSend.toString('hex')}`)
-        await this.mepCommandChar.writeAsync(toSend, true)
+        await this._sendPackets(toSend)
     }
 
     async sendPacketsPreAuth(toaPrefix, toaData: Buffer){
@@ -596,6 +571,10 @@ export class TileService extends EventEmitter {
 
         let toSend = Buffer.from([0, ...this.toaMepProcessor.data, toaPrefix, ...toaData])
         this.emit("debug", `TX preAuth ${toSend.toString("hex")}`)
-        await this.mepCommandChar.writeAsync(toSend, true)
+        await this._sendPackets(toSend)
+    }
+
+    async _sendPackets(toSend: Buffer){
+        throw Error("Not implemented")
     }
 }

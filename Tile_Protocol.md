@@ -2,6 +2,16 @@
 This document will contain an attempt to explain how the communcation works.
 If you want to help research & reverse engineer the protocol further, see the `reseach/` folder
 
+## Bluetooth Architecture
+Each tile has a service called "feed" with uuid `feed` or `0000feed-0000-1000-8000-00805f9b34fb`.
+
+This server has two characteristics:
+MEP_COMMAND_CHAR with UUID `9d410018-35d6-f4dd-ba60-e7bd8dc491c0`
+=> To send data to the tile
+
+MEP_RESPONSE_CHAR with UUID `9d410019-35d6-f4dd-ba60-e7bd8dc491c0`
+=> To receive data from the tile
+
 ## Communication methods
 Tile uses their own authentication for their tile.
 Before you can send a "ring" to your tile, you will need to be authenticated.
