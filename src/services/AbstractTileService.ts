@@ -21,9 +21,9 @@ export const BleGattMode = {
     DISCONNECTED: 9
 }
 
-export const FEED_SERVICE = "0000feed-0000-1000-8000-00805f9b34fb"
-export const MEP_COMMAND_CHAR = "9d410018-35d6-f4dd-ba60-e7bd8dc491c0"
-export const MEP_RESPONSE_CHAR = "9d410019-35d6-f4dd-ba60-e7bd8dc491c0"
+export const FEED_SERVICE: string = "0000feed-0000-1000-8000-00805f9b34fb"
+export const MEP_COMMAND_CHAR: string = "9d410018-35d6-f4dd-ba60-e7bd8dc491c0"
+export const MEP_RESPONSE_CHAR: string = "9d410019-35d6-f4dd-ba60-e7bd8dc491c0"
 
 
 export class AbstractTileService extends EventEmitter {
