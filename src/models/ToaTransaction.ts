@@ -11,6 +11,7 @@ import {TdgTransaction} from "./TdgTransaction.js";
 import {TdtTransaction} from "./TdtTransaction.js";
 import {TdiTransaction} from "./TdiTransaction.js";
 import {ReadyTransaction} from "./ReadyTransaction.js";
+import {TrmTransaction} from "./TrmTransaction.js";
 
 
 interface txMapType {
@@ -43,7 +44,7 @@ let txMap: txMapType = {
     19: {name: "TOA_RSP_CLOSE_CHANNEL", tx: ChannelTransaction},
     20: {name: "TOA_RSP_TDI", tx: TdiTransaction},
     21: {name: "TOA_RSP_AUTHENTICATE", tx: null},
-    25: {name: "TOA_RSP_TRM", tx: null},
+    25: {name: "TOA_RSP_TRM", tx: TrmTransaction},
     26: {name: "TOA_RSP_TPC", tx: null},
     27: {name: "TOA_RSP_ASSOCIATE", tx: null},
     28: {name: "TOA_RSP_AUTHORIZE", tx: null},

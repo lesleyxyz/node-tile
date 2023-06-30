@@ -1,5 +1,5 @@
 import { TkaTransaction, TdgTransaction, TfcTransaction, ToaTransaction, TdtTransaction, SongTransaction, TcuTransaction, ToaMepProcessor, ChannelTransaction, AuthTransaction, TdiTransaction, ToaProcessor, ChOpenTransaction, ToaFeature, BaseTransaction } from "../models/index.js";
-import { ReadyTransaction, TileDataInformation, toaToResp, txFactory, TimeTransaction, RingingStateMachine, RingingStateType, AdvIntTransaction, PpmTransaction, TdtConfig } from "../models/index.js";
+import { TrmTransaction, ReadyTransaction, TileDataInformation, toaToResp, txFactory, TimeTransaction, RingingStateMachine, RingingStateType, AdvIntTransaction, PpmTransaction, TdtConfig } from "../models/index.js";
 import { HighDuty, LowDuty } from "../models/TcuParams.js";
 import { TileVolume } from "../models/TileVolume.js";
 import { Tile } from "../models/Tile.js";
@@ -88,6 +88,7 @@ export class AbstractTileService extends EventEmitter {
     onMepResponse(data: Buffer) {
         let responseType = this.toaMepProcessor.getResponseType(data)
         if(responseType == "NOT_VALID"){
+            // Destined for another channel
             this.emit("debug", `Error Invalid Response ${data.toString('hex')}`)
             return
         }
@@ -135,6 +136,8 @@ export class AbstractTileService extends EventEmitter {
             return this.handleTdtTranscation(tx as TdtTransaction)
         } else if (toaType == "TOA_RSP_TDG"){
             return this.handleTdgTransaction(tx as TdgTransaction)
+        } else if (toaType == "TOA_RSP_TRM"){
+            return this.handleTrmTransaction(tx as TdgTransaction)
         }
 
         this.emit("debug", `Unhandled TOA type ${toaType} ${responseType}`)
@@ -337,9 +340,60 @@ export class AbstractTileService extends EventEmitter {
             await this.sendPacketsAsync(5, new SongTransaction(6)) as SongTransaction
         }
 
+        if(this.isToaFeatureSupported(ToaFeature.TRM)){
+            // Tile RSSI Monitoring
+            await this.stopTileRssiMonitoring()
+            await sleep(2000)
+            await this.startTileRssiMonitoring()
+        }
+
         this.isNotifyAuthTripletSeen = true;
         await this.sendTcuRequest()
         this.onConnectedListener("OK")
+    }
+
+    async startTileRssiMonitoring(batchSize: number = 5) {
+        // The greater the batch size, the longer it'll take between RSSI readings
+        // The batch size also amounts to how many readings it will send you
+
+        let tx = await this.sendPacketsAsync(24, new TrmTransaction(Buffer.from([0x01, batchSize]))) as TrmTransaction
+        let rType = tx.getResponseType()
+        if(rType === "TRM_RSP_START_NOTIFY"){
+            this.emit("debug", "Started Tile RSSI Monitoring")
+        }else{
+            this.emit("debug", `Tile RSSI Monitoring not started: ${tx.getResponseType()}`)
+        }
+    }
+
+    async stopTileRssiMonitoring(){
+        return await this.sendPackets(24, new TrmTransaction(2).getFullPacket())
+    }
+
+    handleTrmTransaction(tx: TrmTransaction){
+        let responseType = tx.getResponseType();
+
+        if(responseType === "TRM_RSP_START_NOTIFY"){
+            this.emit("debug", "Tile confirmed it started monitoring RSSI")
+        }else if(responseType === "TRM_RSP_STOP_NOTIFY"){
+            this.emit("debug", "Tile confirmed it stopped monitoring RSSI")
+        }else if(responseType === "TRM_RSP_READ"){
+            this.emit("debug", "Tile requested RSSI read")
+        }else if(responseType === "TRM_RSP_NOTIFY"){
+            this.emit("debug", "Received RSSI from tile")
+            let length = tx.data[0]
+            let rssiBatches = tx.data.subarray(1, length+1)
+            let denormalizedBatches = Array.from(rssiBatches).map(f => Math.pow(10, f / 10))
+            let avg = denormalizedBatches.reduce((a, b) => a + b) / denormalizedBatches.length
+            let normalizedAvg = Math.log10(avg) * 10
+            let scaled = -100 + ((normalizedAvg / 0xff) * 100)
+
+            this.emit("debug", `Got TRM RSSI batches: ${rssiBatches.toString('hex')}`)
+            this.emit("tileRssi", scaled)
+        }else if(responseType === "TRM_RSP_ERROR"){
+            this.emit("debug", `TRM Error: ${tx.getError()}`)
+        }else{
+            this.emit("debug", `Error TRM response type not found ${tx.prefix}`)
+        }
     }
 
     async programBionicBirdieSong(){

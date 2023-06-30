@@ -1,6 +1,7 @@
 # Tile Protocol
 This document will contain an attempt to explain how the communcation works.
 If you want to help research & reverse engineer the protocol further, see the `reseach/` folder
+@NikeLaosClericus also found [this document describing the spec](https://infocenter.nordicsemi.com/index.jsp?topic=%2Fsdk_nrf5_v16.0.0%2Fgroup___t_o_a___c_o_m_p_a_t_i_b_i_l_i_t_y.html)
 
 ## Bluetooth Architecture
 Each tile has a service called "feed" with uuid `feed` or `0000feed-0000-1000-8000-00805f9b34fb`.

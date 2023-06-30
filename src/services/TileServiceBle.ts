@@ -24,9 +24,12 @@ export class TileServiceBle extends AbstractTileService {
         await this.peripheral.connect()
         this.gattServer = await this.peripheral.gatt()
 
-        /* TODO: Broken: setInterval(async _=> {
-            this.emit("rssi", await this.peripheral.getRSSI())
-        }, rssiTimeout)*/
+        setInterval(async _=> {
+            try {
+                this.emit("rssi", await this.peripheral.getRSSI())
+            }catch{}
+        }, rssiTimeout)
+
         return super.connect(rssiTimeout)
     }
 

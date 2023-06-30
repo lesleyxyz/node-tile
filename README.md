@@ -82,9 +82,15 @@ Double tab:
 service.on("doubleTab", _ => console.log("Got double tab!"))
 ```
 
-On signal strength/RSSI update:
+On signal strength/RSSI update **reported by bluetooth adapter**
+> only supported by noble, NOT node-ble
 ```js
 service.on("rssi", rssi => console.log("rssi", rssi))
+```
+
+On signal strength/RSSI update **reported by your tile**
+```js
+service.on("tileRssi", rssi => console.log("tileRssi", rssi))
 ```
 
 Get debug output:

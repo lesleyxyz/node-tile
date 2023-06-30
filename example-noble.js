@@ -36,6 +36,7 @@ noble.on('discover', async peripheral => {
 	service.on("singleTab", _ => console.log("Got single tab!"))
 	service.on("doubleTab", _ => console.log("Got double tab!"))
 	service.on("rssi", rssi => console.log("rssi", rssi))
+	service.on("tileRssi", rssi => console.log("tileRssi", rssi))
 	service.on("debug", msg => console.log("debug", msg))
 
 	await service.connect()

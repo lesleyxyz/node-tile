@@ -29,6 +29,7 @@ let service = new TileServiceBle(device, tile)
 service.on("singleTab", _ => console.log("Got single tab!"))
 service.on("doubleTab", _ => console.log("Got double tab!"))
 service.on("rssi", rssi => console.log("rssi", rssi))
+service.on("tileRssi", rssi => console.log("tileRssi", rssi))
 service.on("debug", msg => console.log("debug", msg))
 
 await service.connect()
@@ -49,7 +50,11 @@ async function getATile(tiles){
 	}
 }
 
-process.on('SIGINT', _ => {
+process.on('SIGINT', async _ => {
     destroy()
     process.exit();
+})
+
+process.on("beforeExit", async (code) => {
+	destroy()
 })
