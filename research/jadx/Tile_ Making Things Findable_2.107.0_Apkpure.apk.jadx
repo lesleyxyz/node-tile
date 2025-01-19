@@ -11525,7 +11525,7 @@
       "caret": 3924,
       "view": {
         "x": 0,
-        "y": 600
+        "y": 700
       }
     },
     {
@@ -11542,10 +11542,10 @@
       "type": "class",
       "tabPath": "com.thetileapp.tile.ble.gatt.BaseBleGattCallback",
       "subPath": "java",
-      "caret": 13977,
+      "caret": 7991,
       "view": {
         "x": 0,
-        "y": 6015
+        "y": 4649
       }
     },
     {
@@ -11582,10 +11582,10 @@
       "type": "class",
       "tabPath": "f.a",
       "subPath": "java",
-      "caret": 21314,
+      "caret": 0,
       "view": {
         "x": 0,
-        "y": 5235
+        "y": 2
       }
     },
     {
@@ -11612,10 +11612,10 @@
       "type": "class",
       "tabPath": "com.thetileapp.tile.ble.gatt.TileBleGattCallback",
       "subPath": "java",
-      "caret": 45231,
+      "caret": 76503,
       "view": {
         "x": 0,
-        "y": 15331
+        "y": 36769
       }
     },
     {
@@ -11625,7 +11625,7 @@
       "caret": 5659,
       "view": {
         "x": 0,
-        "y": 1297
+        "y": 1436
       }
     },
     {
@@ -11635,17 +11635,17 @@
       "caret": 8038,
       "view": {
         "x": 6,
-        "y": 2843
+        "y": 3086
       }
     },
     {
       "type": "class",
       "tabPath": "com.thetileapp.tile.tiles.TilesManager",
       "subPath": "java",
-      "caret": 60086,
+      "caret": 7195,
       "view": {
         "x": 0,
-        "y": 22067
+        "y": 3469
       }
     },
     {
@@ -11662,10 +11662,10 @@
       "type": "class",
       "tabPath": "androidx.camera.core.d",
       "subPath": "java",
-      "caret": 7624,
+      "caret": 0,
       "view": {
         "x": 0,
-        "y": 2122
+        "y": 2
       }
     },
     {
@@ -11702,7 +11702,7 @@
       "type": "class",
       "tabPath": "com.thetileapp.tile.volumecontrol.TileSongType",
       "subPath": "java",
-      "caret": 557,
+      "caret": 0,
       "view": {
         "x": 0,
         "y": 0
@@ -11715,7 +11715,7 @@
       "caret": 5727,
       "view": {
         "x": 0,
-        "y": 0
+        "y": 1360
       }
     },
     {
@@ -11735,14 +11735,14 @@
       "caret": 10680,
       "view": {
         "x": 0,
-        "y": 3472
+        "y": 4032
       }
     },
     {
       "type": "class",
       "tabPath": "com.tile.toa.tofu.ToaDataBlockUploader",
       "subPath": "java",
-      "caret": 1528,
+      "caret": 1231,
       "view": {
         "x": 0,
         "y": 771
@@ -11757,9 +11757,259 @@
         "x": 0,
         "y": 0
       }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.thetileapp.tile.ble.gatt.TileConnectionClient",
+      "subPath": "java",
+      "caret": 5922,
+      "view": {
+        "x": 0,
+        "y": 2186
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.tile.android.data.table.TileDevice",
+      "subPath": "java",
+      "caret": 4512,
+      "view": {
+        "x": 0,
+        "y": 59
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.thetileapp.tile.locationupdate.api.AdvertisedServiceData",
+      "subPath": "java",
+      "caret": 4156,
+      "view": {
+        "x": 0,
+        "y": 1548
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.thetileapp.tile.tiledevice.LegacyTileDevice",
+      "subPath": "java",
+      "caret": 3103,
+      "view": {
+        "x": 0,
+        "y": 908
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.thetileapp.tile.tiledevice.ActivationTileDevice",
+      "subPath": "java",
+      "caret": 1757,
+      "view": {
+        "x": 0,
+        "y": 556
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.tile.android.ble.scan.ScanEvent",
+      "subPath": "java",
+      "caret": 7379,
+      "view": {
+        "x": 6,
+        "y": 2548
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.tile.android.ble.scan.result.TileScanResult",
+      "subPath": "java",
+      "caret": 12557,
+      "view": {
+        "x": 0,
+        "y": 6439
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.thetileapp.tile.leftbehind.common.LeftBehindManager",
+      "subPath": "java",
+      "caret": 12458,
+      "view": {
+        "x": 0,
+        "y": 3614
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.tile.android.ble.scan.PrivateIdScanResult",
+      "subPath": "java",
+      "caret": 2194,
+      "view": {
+        "x": 0,
+        "y": 660
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.tile.android.ble.scan.ScanEventBus",
+      "subPath": "java",
+      "caret": 3161,
+      "view": {
+        "x": 0,
+        "y": 578
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.tile.android.ble.privatetileid.PrivateId",
+      "subPath": "java",
+      "caret": 834,
+      "view": {
+        "x": 0,
+        "y": 8
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.tile.android.ble.privatetileid.PrivateIdV2",
+      "subPath": "java",
+      "caret": 920,
+      "view": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.tile.android.data.table.PrivateIdHashMapping",
+      "subPath": "java",
+      "caret": 979,
+      "view": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.thetileapp.tile.privatetileid.PrivateIdHashMappingManager",
+      "subPath": "java",
+      "caret": 5320,
+      "view": {
+        "x": 0,
+        "y": 2347
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.tile.android.ble.privatetileid.PrivateIdFactory",
+      "subPath": "java",
+      "caret": 4953,
+      "view": {
+        "x": 0,
+        "y": 2303
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.tile.android.ble.privatetileid.PrivateIdHashMappingProvider",
+      "subPath": "java",
+      "caret": 653,
+      "view": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.tile.antistalking.worker.AntiStalkingWorker",
+      "subPath": "java",
+      "caret": 6496,
+      "view": {
+        "x": 0,
+        "y": 1907
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.tile.android.ble.scan.result.TileScanResultKt",
+      "subPath": "java",
+      "caret": 385,
+      "view": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.tile.android.ble.utils.BluetoothConstants",
+      "subPath": "java",
+      "caret": 2685,
+      "view": {
+        "x": 0,
+        "y": 1582
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.tile.android.ble.scan.type.ScanConfigurationFactory",
+      "subPath": "java",
+      "caret": 11113,
+      "view": {
+        "x": 0,
+        "y": 2963
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.thetileapp.tile.utils.LogUtils",
+      "subPath": "java",
+      "caret": 1185,
+      "view": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.thetileapp.tile.ble.gatt.TileBleActivateGattCallback",
+      "subPath": "java",
+      "caret": 27367,
+      "view": {
+        "x": 0,
+        "y": 13193
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "android.support.v4.media.a",
+      "subPath": "java",
+      "caret": 1048,
+      "view": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.thetileapp.tile.reversering.BaseScanner",
+      "subPath": "java",
+      "caret": 7986,
+      "view": {
+        "x": 0,
+        "y": 2406
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.tile.toa.transactions.ToaTransactionQueue",
+      "subPath": "java",
+      "caret": 358,
+      "view": {
+        "x": 0,
+        "y": 0
+      }
     }
   ],
-  "activeTab": 23,
+  "activeTab": 43,
   "cacheDir": "Tile_ Making Things Findable_2.107.0_Apkpure.apk.cache",
   "enableLiveReload": false,
   "searchHistory": [
