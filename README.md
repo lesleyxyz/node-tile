@@ -9,13 +9,36 @@ If you like my work, give this repository a `⭐` or consider [Buying Me A Coffe
 npm install node-tile
 ```
 
-This package can use both [node-ble](https://github.com/chrvadala/node-ble) or [noble](https://github.com/abandonware/noble) to connect to bluetooth.
+This package can use both [noble](https://github.com/abandonware/noble) or [node-ble](https://github.com/chrvadala/node-ble) to connect to bluetooth.
 This means you require a bluetooth adapter.
 
 Based on which bluetooth package you want to use, you might need some additional configuration:
 
+## Noble (Linux, Windows, MacOS, FreeBSD)
+###  Windows
+No additional configuration is required.
 
-## Node-ble
+###  Running without root/sudo (Linux-specific)
+[(Source)](https://github.com/noble/noble#running-on-linux)
+To use this package on linux, you will have to run the script as root to get access to your bluetooth adapter.
+Otherwise you will get the error that the noble adapter's state is unauthorized.
+
+You can also fix this by running the following command:
+
+```sh
+sudo setcap cap_net_raw+eip $(eval readlink -f `which node`)
+```
+
+This grants the `node` binary `cap_net_raw` privileges, so it can start/stop BLE advertising.
+
+__Note:__ The above command requires `setcap` to be installed.
+It can be installed the following way:
+
+* apt: `sudo apt-get install libcap2-bin`
+* yum: `su -c \'yum install libcap2-bin\'`
+  You will have to checkout the [noble documentation](https://github.com/noble/noble#running-on-linux) on how to configure NodeJS to use a Bluetooth Adapter.
+
+## Node-ble (linux only)
 ### Provide permissions
 [(Source)](https://github.com/chrvadala/node-ble/tree/main#provide-permissions)
 In order to allow a connection with the DBus daemon, you have to set up right permissions.
@@ -37,29 +60,8 @@ Create the file `/etc/dbus-1/system.d/node-ble.conf` with the following content 
 </busconfig>
 ```
 
-## Noble
-###  Running without root/sudo (Linux-specific)
-[(Source)](https://github.com/noble/noble#running-on-linux)
-To use this package on linux, you will have to run the script as root to get access to your bluetooth adapter.
-Otherwise you will get the error that the noble adapter's state is unauthorized.
-
-You can also fix this by running the following command:
-
-```sh
-sudo setcap cap_net_raw+eip $(eval readlink -f `which node`)
-```
-
-This grants the `node` binary `cap_net_raw` privileges, so it can start/stop BLE advertising.
-
-__Note:__ The above command requires `setcap` to be installed.
-It can be installed the following way:
-
- * apt: `sudo apt-get install libcap2-bin`
- * yum: `su -c \'yum install libcap2-bin\'`
-You will have to checkout the [noble documentation](https://github.com/noble/noble#running-on-linux) on how to configure NodeJS to use a Bluetooth Adapter.
-
 # Usage
-See [example.js](example.js) or [example-noble.js](example-noble.js).
+See [example-noble.js](example-noble.js) or [example-node-ble.js](example-node-ble.js) .
 Once you have a connected service, you can do the following:
 
 Make your tile ring:
@@ -113,3 +115,9 @@ service.on("debug", msg => console.log("debug", msg))
 
 This package may not work with all Tiles as the protocol changes over time.
 Also the level of success may vary depending on your bluetooth adapter and tile.
+
+# Improvements
+## Private IDs (see [issue#4](https://github.com/lesleyxyz/node-tile/issues/4))
+Tile has recently started using "Private IDs" for their Tiles.
+This means the Mac Address of the Tile is not the same as the Tile ID.
+This will be implemented in the future when I receive my new Tile.
