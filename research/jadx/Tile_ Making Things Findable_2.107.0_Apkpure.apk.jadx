@@ -11515,7 +11515,7 @@
       "caret": 4051,
       "view": {
         "x": 0,
-        "y": 821
+        "y": 850
       }
     },
     {
@@ -11525,7 +11525,7 @@
       "caret": 3924,
       "view": {
         "x": 0,
-        "y": 700
+        "y": 1070
       }
     },
     {
@@ -11562,7 +11562,7 @@
       "type": "class",
       "tabPath": "com.tile.toa.transactions.TkaTransaction",
       "subPath": "java",
-      "caret": 215,
+      "caret": 366,
       "view": {
         "x": 0,
         "y": 0
@@ -11612,10 +11612,10 @@
       "type": "class",
       "tabPath": "com.thetileapp.tile.ble.gatt.TileBleGattCallback",
       "subPath": "java",
-      "caret": 76503,
+      "caret": 38893,
       "view": {
         "x": 0,
-        "y": 36769
+        "y": 18693
       }
     },
     {
@@ -11625,7 +11625,7 @@
       "caret": 5659,
       "view": {
         "x": 0,
-        "y": 1436
+        "y": 1796
       }
     },
     {
@@ -11635,7 +11635,7 @@
       "caret": 8038,
       "view": {
         "x": 6,
-        "y": 3086
+        "y": 3446
       }
     },
     {
@@ -11715,7 +11715,7 @@
       "caret": 5727,
       "view": {
         "x": 0,
-        "y": 1360
+        "y": 1720
       }
     },
     {
@@ -11735,7 +11735,7 @@
       "caret": 10680,
       "view": {
         "x": 0,
-        "y": 4032
+        "y": 4392
       }
     },
     {
@@ -11785,7 +11785,7 @@
       "caret": 4156,
       "view": {
         "x": 0,
-        "y": 1548
+        "y": 1476
       }
     },
     {
@@ -11795,7 +11795,7 @@
       "caret": 3103,
       "view": {
         "x": 0,
-        "y": 908
+        "y": 982
       }
     },
     {
@@ -11835,7 +11835,7 @@
       "caret": 12458,
       "view": {
         "x": 0,
-        "y": 3614
+        "y": 3644
       }
     },
     {
@@ -11855,7 +11855,7 @@
       "caret": 3161,
       "view": {
         "x": 0,
-        "y": 578
+        "y": 652
       }
     },
     {
@@ -11942,7 +11942,7 @@
       "type": "class",
       "tabPath": "com.tile.android.ble.utils.BluetoothConstants",
       "subPath": "java",
-      "caret": 2685,
+      "caret": 1973,
       "view": {
         "x": 0,
         "y": 1582
@@ -12007,12 +12007,47 @@
         "x": 0,
         "y": 0
       }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.tile.toa.transactions.ToaTransaction",
+      "subPath": "java",
+      "caret": 1383,
+      "view": {
+        "x": 0,
+        "y": 746
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.thetileapp.tile.apppolicies.api.GetAppPropertiesEndpoint",
+      "subPath": "java",
+      "caret": 1709,
+      "view": {
+        "x": 0,
+        "y": 264
+      }
+    },
+    {
+      "type": "class",
+      "tabPath": "com.tile.toa.transactions.AdvIntTransaction",
+      "subPath": "java",
+      "caret": 137,
+      "view": {
+        "x": 0,
+        "y": 0
+      }
     }
   ],
-  "activeTab": 43,
+  "activeTab": 10,
   "cacheDir": "Tile_ Making Things Findable_2.107.0_Apkpure.apk.cache",
   "enableLiveReload": false,
   "searchHistory": [
+    "AdvInt",
+    "tkatransaction",
+    "TKA_",
+    "CLOSE_CHANNEL",
+    "TOA_RSP_TKA",
     "0000feed",
     "feedservice",
     "deviceInfoService",
@@ -12037,11 +12072,6 @@
     "implements TilesDelegate",
     "notifyAuthTr",
     "getExpectedTdtCmdConfig",
-    "(byte) 4",
-    "class TcuPar",
-    "class TcuTransaction",
-    "handleAdvIntTransaction",
-    "class RingingState",
-    "m9760n0"
+    "(byte) 4"
   ]
 }

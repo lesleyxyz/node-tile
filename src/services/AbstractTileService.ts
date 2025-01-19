@@ -5,6 +5,7 @@ import { TileVolume } from "../models/TileVolume.js";
 import { Tile } from "../models/Tile.js";
 import { CryptoUtils } from '../utils/CryptoUtils.js'
 import EventEmitter from "events";
+import {ByteUtils} from "../utils/index.js";
 
 const sleep = ms => new Promise(r => setTimeout(r, ms))
 
@@ -116,7 +117,6 @@ export class AbstractTileService extends EventEmitter {
             return
         }
 
-        this.emit("debug", `char RX ${toaType} ${responseType} ${toaTx.prefix}`)
         if(responseType == "CONNECTIONLESS_ID_RESPONSE") {
             if(toaType == "TOA_RSP_AUTHENTICATE" || toaType == "TOA_RSP_ASSOCIATE"){
                 if(toaType == "TOA_RSP_AUTHENTICATE") {
@@ -459,11 +459,20 @@ export class AbstractTileService extends EventEmitter {
             return
         }
 
-        this.emit("debug", `Error TKA tkaType`)
+        this.emit("debug", `Error TKA ${tkaType}`)
     }
 
     async handleCloseChannelTransaction(tx: ChannelTransaction) {
-        this.emit("debug", `Error: Closing channel`)
+        this.emit("debug", `Error: Closing channel ${tx.getPrefix()} ${tx.getErrorType()} ${tx.data.toString('hex')}`)
+
+        if(tx.getErrorType() === "CLOSE_REASON_MIC_FAILURE" || tx.getErrorType() === "CLOSE_REASON_BROADCAST_MIC_FAIL"){
+            let got = tx.data.subarray(0, 4)
+            let expected = tx.data.subarray(4, 8)
+            let gotString = tx.getErrorType() === "CLOSE_REASON_MIC_FAILURE" ? "Nonce" : "Client NonceB"
+
+            this.emit("debug", `Got ${gotString} ${got.toString('hex')} expected MIC ${expected.toString('hex')}`)
+        }
+
         this.toaProcessor.channelOpened = false
         this._disconnect()
     }
@@ -602,12 +611,16 @@ export class AbstractTileService extends EventEmitter {
 
     async sendPackets(toaPrefix, toaData: Buffer){
         let payload = Buffer.from([toaPrefix, ...toaData]);
+        let debugPayload = payload.toString('hex')
         
         this.toaProcessor.nonceA++;
         if(this.toaProcessor.isServerSupported()){
             let bfNonceA = CryptoUtils.convertToLongBuffer(this.toaProcessor.nonceA)
             let hmac = CryptoUtils.generateHmac(this.toaProcessor.authKeyHmac, bfNonceA, 1, payload.length, payload).subarray(0, 4)
             payload = Buffer.from([...payload, ...hmac])
+            debugPayload = `${debugPayload} hmac=${hmac.toString('hex')}`
+        }else{
+            debugPayload = `${debugPayload} hmac=<no mac>`
         }
 
         let tx = new ToaTransaction(payload)
@@ -615,11 +628,13 @@ export class AbstractTileService extends EventEmitter {
             let channelPrefix = this.toaMepProcessor.channelPrefix
             let bf = Buffer.from([channelPrefix, ...payload])
             tx = new ToaTransaction(bf)
+            debugPayload = `CID=${channelPrefix} ${debugPayload}`
+        }else{
+            debugPayload = `CID=<no CID> ${debugPayload}`
         }
 
-
         let toSend = tx.getFullPacket()
-        this.emit("debug", `char TX ${toSend.toString('hex')}`)
+        this.emit("debug", `char TX ${debugPayload} raw=${toSend.toString('hex')}`)
         await this._sendPackets(toSend)
     }
 

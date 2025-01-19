@@ -64,23 +64,15 @@ export class TileServiceNoble extends AbstractTileService {
         this.toaMepProcessor = new ToaMepProcessor(CryptoUtils.generateRandomBytes(4))
 
         this.emit("debug", `[${this.macAddress}] [FEED_SERVICE] Subscribing to MEP Response`)
-        let descriptors = await this.mepResponseChar.discoverDescriptorsAsync()
-        let descriptor = descriptors[0]
 
-        descriptor.once('valueWrite', this.startTdiSequence.bind(this));
         this.mepResponseChar.on('data', this.onMepResponse.bind(this))
-        this.mepResponseChar.subscribe(this.onCharSubscribed.bind(this));
-
-        // Not supported for WinRT:
-        await descriptor.writeValueAsync(Buffer.from([0x01, 0x00]))
-    }
-
-    onCharSubscribed(error){
-        if (error) {
-            console.error('Error subscribing to MEP Response');
-            throw error
-        }
-        this.emit("debug", `[${this.macAddress}] Subscribed to MEP Response`)
+        this.mepResponseChar.subscribe(error => {
+            if (error) {
+                throw error
+            }
+            this.emit("debug", `[${this.macAddress}] Subscribed to MEP Response`)
+            this.startTdiSequence()
+        });
     }
 
     isMepCmdOrRespSet(): boolean {
