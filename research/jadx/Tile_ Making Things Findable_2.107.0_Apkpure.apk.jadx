@@ -1111,7 +1111,7 @@
           "declClass": "com.thetileapp.tile.ble.gatt.BaseBleGattCallback",
           "shortId": "n:Landroid/bluetooth/BluetoothGattService;"
         },
-        "newName": "bleGattService2"
+        "newName": "deviceInfoService"
       },
       {
         "nodeRef": {
@@ -1119,7 +1119,7 @@
           "declClass": "com.thetileapp.tile.ble.gatt.BaseBleGattCallback",
           "shortId": "o:Landroid/bluetooth/BluetoothGattService;"
         },
-        "newName": "bleGattService3"
+        "newName": "batteryService"
       },
       {
         "nodeRef": {
@@ -1892,6 +1892,14 @@
       {
         "nodeRef": {
           "refType": "FIELD",
+          "declClass": "com.thetileapp.tile.privatetileid.PrivateIdHashMappingManager",
+          "shortId": "f:Landroid/util/LruCache;"
+        },
+        "newName": "hashedTileUuidToPrivateIdHashMapping"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
           "declClass": "com.thetileapp.tile.remotering.RingingStateMachine",
           "shortId": "a:Lcom/thetileapp/tile/remotering/RingingStateMachine$RingingStateListener;"
         },
@@ -1928,6 +1936,22 @@
           "shortId": "a:Lcom/thetileapp/tile/remotering/RingingStateMachine$RingingStateType;"
         },
         "newName": "RESET"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.thetileapp.tile.tiledevice.ActivationTileDevice",
+          "shortId": "b:Ljava/lang/String;"
+        },
+        "newName": "macAddress"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.thetileapp.tile.tiledevice.LegacyTileDevice",
+          "shortId": "b:Ljava/lang/String;"
+        },
+        "newName": "macAddr"
       },
       {
         "nodeRef": {
@@ -2484,6 +2508,134 @@
       {
         "nodeRef": {
           "refType": "FIELD",
+          "declClass": "com.tile.android.ble.privatetileid.PrivateId",
+          "shortId": "a:Ljava/lang/String;"
+        },
+        "newName": "hashedId"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.privatetileid.PrivateId",
+          "shortId": "b:Ljava/lang/String;"
+        },
+        "newName": "tileId"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.privatetileid.PrivateId",
+          "shortId": "c:Ljava/lang/Short;"
+        },
+        "newName": "counter"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.privatetileid.PrivateId",
+          "shortId": "d:I"
+        },
+        "newName": "version"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "a:Ljava/lang/String;"
+        },
+        "newName": "macAddress"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "b:J"
+        },
+        "newName": "timestamp"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "c:Ljava/lang/String;"
+        },
+        "newName": "hashedId"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "d:I"
+        },
+        "newName": "version"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "e:Ljava/lang/String;"
+        },
+        "newName": "tileId"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "f:Ljava/lang/Short;"
+        },
+        "newName": "counter"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "g:Ljava/lang/Integer;"
+        },
+        "newName": "txPower"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "h:Ljava/lang/Integer;"
+        },
+        "newName": "rssi"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "i:Ljava/lang/String;"
+        },
+        "newName": "serviceData"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "j:Z"
+        },
+        "newName": "reverseRingFlag"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "k:Ljava/util/List;"
+        },
+        "newName": "serviceUuids"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "l:Lcom/tile/android/data/table/ConnectionPolicy;"
+        },
+        "newName": "connectionPolicy"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
           "declClass": "com.tile.android.ble.scan.ScanEvent$Activation",
           "shortId": "a:Lcom/tile/android/ble/scan/result/TileScanResult;"
         },
@@ -2621,9 +2773,73 @@
         "nodeRef": {
           "refType": "FIELD",
           "declClass": "com.tile.android.ble.scan.result.TileScanResult",
+          "shortId": "d:Landroid/bluetooth/le/ScanRecord;"
+        },
+        "newName": "scanRecord"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.result.TileScanResult",
           "shortId": "e:Ljava/lang/String;"
         },
         "newName": "macAddress"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.result.TileScanResult",
+          "shortId": "j:Lkotlin/Lazy;"
+        },
+        "newName": "discoveryUuid"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.result.TileScanResult",
+          "shortId": "k:Lkotlin/Lazy;"
+        },
+        "newName": "secondByteOfDiscoveryUuid"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.result.TileScanResult",
+          "shortId": "l:Lkotlin/Lazy;"
+        },
+        "newName": "firstByteOfDiscoveryUuid"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.result.TileScanResult",
+          "shortId": "n:Lkotlin/Lazy;"
+        },
+        "newName": "connectionPolicy"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.result.TileScanResult",
+          "shortId": "p:Lkotlin/Lazy;"
+        },
+        "newName": "get10till13or14OfDiscoveryUuid"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.result.TileScanResult",
+          "shortId": "q:Lkotlin/Lazy;"
+        },
+        "newName": "discoveryUuidStr"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.scan.result.TileScanResultKt",
+          "shortId": "a:Landroid/os/ParcelUuid;"
+        },
+        "newName": "bleDiscoveryParcelUuid"
       },
       {
         "nodeRef": {
@@ -2911,7 +3127,39 @@
           "declClass": "com.tile.android.ble.utils.BluetoothConstants",
           "shortId": "a:Ljava/util/UUID;"
         },
-        "newName": "bleService1"
+        "newName": "UUID_TO_FILTER_WITH_FOR_DISCOVERY2"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.utils.BluetoothConstants",
+          "shortId": "c:Ljava/util/UUID;"
+        },
+        "newName": "JIOBIT_BASE_ADDRESS"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.utils.BluetoothConstants",
+          "shortId": "d:Ljava/util/UUID;"
+        },
+        "newName": "UUID_TO_FILTER_WITH_FOR_DISCOVERY"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.utils.BluetoothConstants",
+          "shortId": "e:Ljava/util/UUID;"
+        },
+        "newName": "UUID_TO_FILTER_WITH_FOR_ACTIVATION"
+      },
+      {
+        "nodeRef": {
+          "refType": "FIELD",
+          "declClass": "com.tile.android.ble.utils.BluetoothConstants",
+          "shortId": "f:Ljava/util/UUID;"
+        },
+        "newName": "UUID_TO_FILTER_WITH_FOR_BOSE"
       },
       {
         "nodeRef": {
@@ -2919,7 +3167,7 @@
           "declClass": "com.tile.android.ble.utils.BluetoothConstants",
           "shortId": "g:Ljava/util/UUID;"
         },
-        "newName": "bleService2"
+        "newName": "deviceInformationService"
       },
       {
         "nodeRef": {
@@ -2927,7 +3175,7 @@
           "declClass": "com.tile.android.ble.utils.BluetoothConstants",
           "shortId": "h:Ljava/util/UUID;"
         },
-        "newName": "bleService3"
+        "newName": "batteryService"
       },
       {
         "nodeRef": {
@@ -5667,14 +5915,6 @@
           "declClass": "com.thetileapp.tile.ble.gatt.BaseBleGattCallback",
           "shortId": "n0()Z"
         },
-        "newName": "shouldTofuIThink"
-      },
-      {
-        "nodeRef": {
-          "refType": "METHOD",
-          "declClass": "com.thetileapp.tile.ble.gatt.BaseBleGattCallback",
-          "shortId": "n0()Z"
-        },
         "codeRef": {
           "attachType": "VAR",
           "index": 196608
@@ -5716,6 +5956,14 @@
           "index": 393218
         },
         "newName": "isTileRinging"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.thetileapp.tile.ble.gatt.BaseBleGattCallback",
+          "shortId": "n0()Z"
+        },
+        "newName": "shouldTofuIThink"
       },
       {
         "nodeRef": {
@@ -6456,6 +6704,18 @@
       {
         "nodeRef": {
           "refType": "METHOD",
+          "declClass": "com.thetileapp.tile.ble.gatt.TileBleActivateGattCallback",
+          "shortId": "u0()V"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 65545
+        },
+        "newName": "tileIdChar"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
           "declClass": "com.thetileapp.tile.ble.gatt.TileBleGattCallback",
           "shortId": "\u003cinit\u003e(Ljava/lang/String;Ljava/lang/String;Ldagger/Lazy;Li/a;Lcom/tile/toa/processor/CryptoDelegate;Lcom/tile/toa/tofu/ToaDataBlockUploader;Lcom/tile/toa/tofu/ToaDataBlockUploader;Lcom/thetileapp/tile/responsibilities/TileEventAnalyticsDelegate;Lcom/thetileapp/tile/toa/TileSongFileManager;Lcom/tile/android/time/TileClock;Lcom/thetileapp/tile/ble/BleThreadDelegate;Lcom/thetileapp/tile/ble/BleControlDelegate;Lcom/thetileapp/tile/toa/ToaProcessor;Lcom/thetileapp/tile/partnerdevicesble/PartnerScannedDevicesCache;Lcom/thetileapp/tile/ble/TileSeenListeners;Lcom/thetileapp/tile/tiles/UserTileHelper;Ljava/util/concurrent/Executor;Lcom/tile/android/ble/TileEventPublisher;Lcom/thetileapp/tile/ble/TofuController;Lcom/thetileapp/tile/featureflags/GattRefreshFeatureManager;Lcom/thetileapp/tile/proximitymeter/ProximityMeterFeatureManager;Lcom/tile/android/ble/scan/utils/ScanWindowCounter;Lcom/tile/featureflags/flags/TileRingFeatures;)V"
         },
@@ -7084,6 +7344,14 @@
       {
         "nodeRef": {
           "refType": "METHOD",
+          "declClass": "com.thetileapp.tile.ble.gatt.TileConnectionClient",
+          "shortId": "a(Landroid/bluetooth/BluetoothDevice;Lcom/thetileapp/tile/ble/gatt/TileConnectionClient;Lcom/thetileapp/tile/ble/gatt/TileBleActivateGattCallback;J)V"
+        },
+        "newName": "connectGattActivation"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
           "declClass": "com.thetileapp.tile.ble.gatt.TileConnectionClient$connectTileBleGattCallback$lambda-1$$inlined$postDelayed$default$1",
           "shortId": "run()V"
         },
@@ -7224,6 +7492,14 @@
           "shortId": "g()V"
         },
         "newName": "startConnection"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.thetileapp.tile.privatetileid.PrivateIdHashMappingManager",
+          "shortId": "a(Ljava/util/List;)Ljava/util/ArrayList;"
+        },
+        "newName": "addToHashedTileUuidToPrivateIdHashMapping"
       },
       {
         "nodeRef": {
@@ -8072,6 +8348,166 @@
       {
         "nodeRef": {
           "refType": "METHOD",
+          "declClass": "com.tile.android.ble.privatetileid.PrivateId",
+          "shortId": "\u003cinit\u003e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Short;I)V"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 196608
+        },
+        "newName": "tileId"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.privatetileid.PrivateId",
+          "shortId": "\u003cinit\u003e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Short;I)V"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 262144
+        },
+        "newName": "counter"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.privatetileid.PrivateId",
+          "shortId": "\u003cinit\u003e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Short;I)V"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 327680
+        },
+        "newName": "version"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.privatetileid.PrivateIdHashMappingProvider",
+          "shortId": "a(Ljava/util/List;)Ljava/util/ArrayList;"
+        },
+        "newName": "addToHashedTileUuidToPrivateIdHashMapping"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.privatetileid.PrivateIdV2",
+          "shortId": "a(Ljava/lang/String;)Ljava/lang/String;"
+        },
+        "newName": "modifyPrivateIdString"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "\u003cinit\u003e(Ljava/lang/String;JLjava/lang/String;ILjava/lang/String;Ljava/lang/Short;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;ZLjava/util/List;Lcom/tile/android/data/table/ConnectionPolicy;)V"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 196608
+        },
+        "newName": "timeStamp"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "\u003cinit\u003e(Ljava/lang/String;JLjava/lang/String;ILjava/lang/String;Ljava/lang/Short;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;ZLjava/util/List;Lcom/tile/android/data/table/ConnectionPolicy;)V"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 393216
+        },
+        "newName": "version"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "\u003cinit\u003e(Ljava/lang/String;JLjava/lang/String;ILjava/lang/String;Ljava/lang/Short;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;ZLjava/util/List;Lcom/tile/android/data/table/ConnectionPolicy;)V"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 458752
+        },
+        "newName": "tileId"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "\u003cinit\u003e(Ljava/lang/String;JLjava/lang/String;ILjava/lang/String;Ljava/lang/Short;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;ZLjava/util/List;Lcom/tile/android/data/table/ConnectionPolicy;)V"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 524288
+        },
+        "newName": "counter"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "\u003cinit\u003e(Ljava/lang/String;JLjava/lang/String;ILjava/lang/String;Ljava/lang/Short;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;ZLjava/util/List;Lcom/tile/android/data/table/ConnectionPolicy;)V"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 589824
+        },
+        "newName": "txPower"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "\u003cinit\u003e(Ljava/lang/String;JLjava/lang/String;ILjava/lang/String;Ljava/lang/Short;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;ZLjava/util/List;Lcom/tile/android/data/table/ConnectionPolicy;)V"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 655360
+        },
+        "newName": "rssi"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "\u003cinit\u003e(Ljava/lang/String;JLjava/lang/String;ILjava/lang/String;Ljava/lang/Short;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;ZLjava/util/List;Lcom/tile/android/data/table/ConnectionPolicy;)V"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 720896
+        },
+        "newName": "serviceData"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "\u003cinit\u003e(Ljava/lang/String;JLjava/lang/String;ILjava/lang/String;Ljava/lang/Short;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;ZLjava/util/List;Lcom/tile/android/data/table/ConnectionPolicy;)V"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 786432
+        },
+        "newName": "reverseRingFlag"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.scan.PrivateIdScanResult",
+          "shortId": "\u003cinit\u003e(Ljava/lang/String;JLjava/lang/String;ILjava/lang/String;Ljava/lang/Short;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;ZLjava/util/List;Lcom/tile/android/data/table/ConnectionPolicy;)V"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 851968
+        },
+        "newName": "serviceUuids"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
           "declClass": "com.tile.android.ble.scan.ScanEvent$MacAddressRssi",
           "shortId": "toString()Ljava/lang/String;"
         },
@@ -8096,6 +8532,14 @@
       {
         "nodeRef": {
           "refType": "METHOD",
+          "declClass": "com.tile.android.ble.scan.ScanEventBus",
+          "shortId": "b(Ljava/util/ArrayList;)V"
+        },
+        "newName": "addPrivateIdScanResult"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
           "declClass": "com.tile.android.ble.scan.TileTriggerScanResult",
           "shortId": "\u003cinit\u003e(Ljava/lang/String;Ljava/lang/String;IZLjava/lang/String;)V"
         },
@@ -8104,6 +8548,62 @@
           "index": 131072
         },
         "newName": "hashedTileId"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.scan.result.TileScanResult",
+          "shortId": "a()Ljava/util/List;"
+        },
+        "newName": "getServiceUuids"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.scan.result.TileScanResult$serviceData$2",
+          "shortId": "invoke()Ljava/lang/Object;"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 3
+        },
+        "newName": "jVal"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.scan.result.TileScanResult$serviceDataByteArray$2",
+          "shortId": "invoke()Ljava/lang/Object;"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 2
+        },
+        "newName": "serviceDataMap"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.scan.result.TileScanResult$serviceDataByteArray$2",
+          "shortId": "invoke()Ljava/lang/Object;"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 3
+        },
+        "newName": "discoveryUuid"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.scan.result.TileScanResult$triggerChallenge$2",
+          "shortId": "invoke()Ljava/lang/Object;"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 3
+        },
+        "newName": "discoverUuid"
       },
       {
         "nodeRef": {
@@ -8592,6 +9092,42 @@
       {
         "nodeRef": {
           "refType": "METHOD",
+          "declClass": "com.tile.android.ble.utils.BluetoothConstants",
+          "shortId": "\u003cclinit\u003e()V"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 1
+        },
+        "newName": "discoveryUuid"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.utils.BluetoothConstants",
+          "shortId": "\u003cclinit\u003e()V"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 65537
+        },
+        "newName": "activationUuid"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.android.ble.utils.BluetoothConstants",
+          "shortId": "\u003cclinit\u003e()V"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 131073
+        },
+        "newName": "boseUuid"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
           "declClass": "com.tile.android.data.objectbox.db.ObjectBoxTileDeviceDb",
           "shortId": "updateTileMacAddress(Ljava/lang/String;Ljava/lang/String;J)V"
         },
@@ -8660,6 +9196,18 @@
           "shortId": "e()J"
         },
         "newName": "getCurrentMsWDrift"
+      },
+      {
+        "nodeRef": {
+          "refType": "METHOD",
+          "declClass": "com.tile.antistalking.worker.AntiStalkingTileDetectorImpl$observeTileDetections$connectedTilesObservable$3",
+          "shortId": "invoke(Ljava/lang/Object;)Ljava/lang/Object;"
+        },
+        "codeRef": {
+          "attachType": "VAR",
+          "index": 65537
+        },
+        "newName": "serviceData"
       },
       {
         "nodeRef": {
@@ -11215,6 +11763,14 @@
   "cacheDir": "Tile_ Making Things Findable_2.107.0_Apkpure.apk.cache",
   "enableLiveReload": false,
   "searchHistory": [
+    "0000feed",
+    "feedservice",
+    "deviceInfoService",
+    "PrivateId",
+    "PrivateIdScanResult",
+    "PrivateIdScanREsult",
+    "getMacAddress()",
+    "BluetoothDevice ",
     "m5687b",
     "(byte) 5, new Song",
     "class TileSong",
@@ -11236,14 +11792,6 @@
     "class TcuTransaction",
     "handleAdvIntTransaction",
     "class RingingState",
-    "m9760n0",
-    "diagEnd",
-    "class TfcTransaction",
-    "(byte) 10,",
-    "nonceInfo",
-    "handleTdgTransaction",
-    "handleTdg",
-    "extends BaseBleGattCallback",
-    "finishCommsReady"
+    "m9760n0"
   ]
 }
