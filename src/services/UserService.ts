@@ -31,6 +31,10 @@ export class UserService {
 		let responseBody = await response.json()
 		this.handleError(responseBody)
 
+		if(responseBody?.result?.message === "Invalid credentials") {
+			throw Error("Tile API reported Invalid credentials");
+		}
+
 		this.#cookie = cookie
 	}
 
