@@ -112,6 +112,7 @@ export class AbstractTileService extends EventEmitter {
             return
         }
 
+        this.emit("debug", `char RX ${toaType} ${responseType} ${toaTx.prefix}`)
         if(responseType == "CONNECTIONLESS_ID_RESPONSE") {
             if(toaType == "TOA_RSP_AUTHENTICATE" || toaType == "TOA_RSP_ASSOCIATE"){
                 if(toaType == "TOA_RSP_AUTHENTICATE") {
