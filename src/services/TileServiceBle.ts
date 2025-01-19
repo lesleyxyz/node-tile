@@ -2,7 +2,14 @@ import { ToaMepProcessor } from "../models/index.js";
 import { Tile } from "../models/Tile.js";
 import { Device, GattServer, GattService, GattCharacteristic } from 'node-ble'
 import { CryptoUtils } from '../utils/CryptoUtils.js'
-import { AbstractTileService, BleGattMode, FEED_SERVICE, MEP_COMMAND_CHAR, MEP_RESPONSE_CHAR } from './AbstractTileService.js'
+import {
+    AbstractTileService,
+    BleGattMode,
+    FEED_SERVICE,
+    MEP_COMMAND_CHAR,
+    MEP_RESPONSE_CHAR,
+    TILE_ID_CHAR
+} from './AbstractTileService.js'
 
 export class TileServiceBle extends AbstractTileService {
     peripheral: Device
@@ -20,7 +27,7 @@ export class TileServiceBle extends AbstractTileService {
     async connect(rssiTimeout = 2000){
         this.macAddress = await this.peripheral.getAddress()
 
-        this.emit("debug", `Connecting ${this.macAddress}`)
+        this.emit("debug", `[${this.macAddress}] Connecting`)
         await this.peripheral.connect()
         this.gattServer = await this.peripheral.gatt()
 
@@ -34,12 +41,18 @@ export class TileServiceBle extends AbstractTileService {
     }
 
     async discoverServices(){
+        this.emit("debug", `[${this.macAddress}] Discovering services`)
         const services = await this.gattServer.services()
-        this.emit("debug", `Services ${services.join(" ")}`)
-        this.feedService = await this.gattServer.getPrimaryService(FEED_SERVICE)
+        this.emit("debug", `[${this.macAddress}] Service found: ${services.join(" ")}`)
 
+        this.feedService = await this.gattServer.getPrimaryService(FEED_SERVICE)
+        if(!this.feedService){
+            throw "Feed service not found"
+        }
+
+        this.emit("debug", `[${this.macAddress}] [FEED_SERVICE] Discovering characteristics`)
         const characteristics = await this.feedService.characteristics()
-        this.emit("debug", `Got service characteristics ${characteristics.join(" ")}`)
+        this.emit("debug", `[${this.macAddress}] [FEED_SERVICE] Characteristics found: ${characteristics.join(" ")}`)
         
         this.mepCommandChar = await this.feedService.getCharacteristic(MEP_COMMAND_CHAR)
         this.mepResponseChar = await this.feedService.getCharacteristic(MEP_RESPONSE_CHAR)
@@ -51,6 +64,7 @@ export class TileServiceBle extends AbstractTileService {
         this.randA = CryptoUtils.generateRandomBytes(14)
         this.toaMepProcessor = new ToaMepProcessor(CryptoUtils.generateRandomBytes(4))
 
+        this.emit("debug", `[${this.macAddress}] [FEED_SERVICE] Subscribing to MEP Response`)
         await this.mepResponseChar.on('valuechanged', this.onMepResponse.bind(this))
         await this.mepResponseChar.startNotifications()
         this.startTdiSequence()

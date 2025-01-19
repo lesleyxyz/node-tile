@@ -24,7 +24,11 @@ export const BleGattMode = {
 export const FEED_SERVICE: string = "0000feed-0000-1000-8000-00805f9b34fb"
 export const MEP_COMMAND_CHAR: string = "9d410018-35d6-f4dd-ba60-e7bd8dc491c0"
 export const MEP_RESPONSE_CHAR: string = "9d410019-35d6-f4dd-ba60-e7bd8dc491c0"
-
+// This Tile ID characteristic is not always present. It lives in the "deviceInfoService"
+// It is only present in newer tiles that have a PrivateId
+// The service UUID of deviceInfoService could be "180a" but at this time I have not seen it
+// Possibly because I have an older version of the til
+export const TILE_ID_CHAR: string = "9d410007-35d6-f4dd-ba60-e7bd8dc491c0"
 
 export class AbstractTileService extends EventEmitter {
     // Tile Info
@@ -63,7 +67,7 @@ export class AbstractTileService extends EventEmitter {
         this.toaProcessor = new ToaProcessor()
         this.ringingStateMachine = new RingingStateMachine()
 
-        this.emit("debug", `Connected ${this.macAddress}`)
+        this.emit("debug", `[${this.macAddress}] Connected`)
         await this.discoverServices()
         this.emit("debug", `Discovered services ${this.macAddress}`)
         return new Promise(r => { this.onConnectedListener = r })

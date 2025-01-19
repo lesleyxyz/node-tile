@@ -45,7 +45,6 @@ export class UserService {
 		}
 	}
 
-
 	async getTiles(): Promise<Tile[]> {
 		let response = await fetch("https://production.tile-api.com/api/v1/users/groups?last_modified_timestamp=0", {
 			headers: this.getHeaders()
@@ -67,7 +66,29 @@ export class UserService {
 			tiles.push(tile)
 		}
 
+		this.getTile(tiles[0].id)
+
 		return tiles
+	}
+
+	async getTileStates() {
+		let response = await fetch(`https://production.tile-api.com/api/v1/tiles/tile_states`, {
+			headers: this.getHeaders()
+		}).then(r => r.json())
+
+		this.handleError(response)
+
+		return response.result
+	}
+
+	async getTile(tileId: string) {
+		let response = await fetch(`https://production.tile-api.com/api/v1/tiles/${tileId}`, {
+			headers: this.getHeaders()
+		}).then(r => r.json())
+
+		this.handleError(response)
+
+		return response.result
 	}
 
 	getHeaders(includeCookie: boolean = true): object {
