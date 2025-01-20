@@ -9,10 +9,10 @@ If you like my work, give this repository a `⭐` or consider [Buying Me A Coffe
 npm install node-tile
 ```
 
-This package can use both [noble](https://github.com/abandonware/noble) or [node-ble](https://github.com/chrvadala/node-ble) to connect to bluetooth.
+This package can uses [noble](https://github.com/abandonware/noble).
 This means you require a bluetooth adapter.
 
-Based on which bluetooth package you want to use, you might need some additional configuration:
+To configure noble, see below
 
 ## Noble (Linux, Windows, MacOS, FreeBSD)
 ###  Windows
@@ -38,30 +38,9 @@ It can be installed the following way:
 * yum: `su -c \'yum install libcap2-bin\'`
   You will have to checkout the [noble documentation](https://github.com/noble/noble#running-on-linux) on how to configure NodeJS to use a Bluetooth Adapter.
 
-## Node-ble (linux only)
-### Provide permissions
-[(Source)](https://github.com/chrvadala/node-ble/tree/main#provide-permissions)
-In order to allow a connection with the DBus daemon, you have to set up right permissions.
-
-Create the file `/etc/dbus-1/system.d/node-ble.conf` with the following content (customize with userid)
-
-```xml
-<!DOCTYPE busconfig PUBLIC "-//freedesktop//DTD D-BUS Bus Configuration 1.0//EN"
-  "http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">
-<busconfig>
-  <policy user="%userid%">
-   <allow own="org.bluez"/>
-    <allow send_destination="org.bluez"/>
-    <allow send_interface="org.bluez.GattCharacteristic1"/>
-    <allow send_interface="org.bluez.GattDescriptor1"/>
-    <allow send_interface="org.freedesktop.DBus.ObjectManager"/>
-    <allow send_interface="org.freedesktop.DBus.Properties"/>
-  </policy>
-</busconfig>
-```
 
 # Usage
-See [example-noble.js](example-noble.js) or [example-node-ble.js](example-node-ble.js) .
+See [example.js](example-noble.js).
 Once you have a connected service, you can do the following:
 
 Make your tile ring:
@@ -109,15 +88,10 @@ service.on("debug", msg => console.log("debug", msg))
 - Program the "Bionic Birdie" song
 
 # Tested & working with
+- Tile Slim 2024
 - Tile Slim 2022
 - Tile Pro 2022
 - Tile Mate 2022
 
 This package may not work with all Tiles as the protocol changes over time.
 Also the level of success may vary depending on your bluetooth adapter and tile.
-
-# Improvements
-## Private IDs (see [issue#4](https://github.com/lesleyxyz/node-tile/issues/4))
-Tile has recently started using "Private IDs" for their Tiles.
-This means the Mac Address of the Tile is not the same as the Tile ID.
-This will be implemented in the future when I receive my new Tile.
