@@ -1,7 +1,5 @@
-import { ToaMepProcessor } from "../models/index.js";
 import { Tile } from "../models/Tile.js";
 import { Device, GattServer, GattService, GattCharacteristic } from 'node-ble'
-import { CryptoUtils } from '../utils/CryptoUtils.js'
 import {
     AbstractTileService,
     BleGattMode,
@@ -17,9 +15,10 @@ export class TileServiceBle extends AbstractTileService {
     feedService: GattService
     mepCommandChar: GattCharacteristic
     mepResponseChar: GattCharacteristic
+    tileIdChar: GattCharacteristic
 
-    constructor(peripheral: Device, tile: Tile){
-        super(tile)
+    constructor(peripheral: Device){
+        super()
         this.peripheral = peripheral
         this.bleGattMode = BleGattMode.DISCONNECTED
     }
@@ -56,18 +55,25 @@ export class TileServiceBle extends AbstractTileService {
         
         this.mepCommandChar = await this.feedService.getCharacteristic(MEP_COMMAND_CHAR)
         this.mepResponseChar = await this.feedService.getCharacteristic(MEP_RESPONSE_CHAR)
+        try{
+            this.tileIdChar = await this.feedService.getCharacteristic(TILE_ID_CHAR)
+        }catch (e){
+            this.tileIdChar = null
+            this.emit("debug", `[${this.macAddress}] [FEED_SERVICE] Tile ID characteristic not found, Tile does not use Private ID`)
+        }
 
         if(!this.isMepCmdOrRespSet()){
             throw "BLE Characteristics not found :( is this a Tile?"
         }
 
-        this.randA = CryptoUtils.generateRandomBytes(14)
-        this.toaMepProcessor = new ToaMepProcessor(CryptoUtils.generateRandomBytes(4))
-
-        this.emit("debug", `[${this.macAddress}] [FEED_SERVICE] Subscribing to MEP Response`)
         await this.mepResponseChar.on('valuechanged', this.onMepResponse.bind(this))
+    }
+
+    async authenticate(tile: Tile){
+        this.emit("debug", `[${this.macAddress}] [FEED_SERVICE] Subscribing to MEP Response`)
         await this.mepResponseChar.startNotifications()
-        this.startTdiSequence()
+        this.emit("debug", `[${this.macAddress}] Subscribed to MEP Response`)
+        await super.authenticate(tile)
     }
 
     isMepCmdOrRespSet(): boolean {

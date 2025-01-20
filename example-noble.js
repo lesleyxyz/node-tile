@@ -2,7 +2,7 @@ import noble from '@abandonware/noble'
 import {TileServiceNoble, TileVolume, UserService} from 'node-tile'
 
 // We have to log into Tile to get the authkeys of your tile
-const userService = new UserService("<your-tile-email>", "<your-tile-password>")
+const userService = new UserService("<email>", "<password>")
 await userService.login()
 
 const tiles = await userService.getTiles()
@@ -19,28 +19,43 @@ noble.on('stateChange', state => {
 
 noble.on('discover', async peripheral => {
 	let address = peripheral.address.split(":").join("")
-	
-	// If we find ANY tile in our account, we continue
-	let tile = tiles.filter(t => t.id.startsWith(address))[0]
-	if(!tile){
-		console.log("Non-tile", address)
+
+	// Create the service based on bluetooth device
+	let bleTile = new TileServiceNoble(peripheral)
+	bleTile.on("debug", msg => console.log("debug", msg))
+
+	if(!bleTile.isTile()){
+		console.log("Non-tile", address, peripheral.advertisement)
 		return
 	}
 
-	console.log("TILE", peripheral.address, peripheral.rssi, tile)
+	if(!bleTile.isTileActivated()) {
+		console.log("Non-activated tile, please activate in app first", address)
+		return
+	}
+
+	console.log("TILE FOUND", peripheral.address);
+
+	// To be able to get the tileId, we have to connect to the tile
 	noble.stopScanning()
+	await bleTile.connect()
 
-	// Create the service based on bluetooth device & tile from our account
-	let service = new TileServiceNoble(peripheral, tile)
+	// Based on the tileId, we can find the tile in our account
+	let tileId = await bleTile.getTileId()
+	let accTile = tiles.filter(t => t.id.startsWith(tileId))[0]
+	if(!accTile){
+		console.log("Tile not found in account", tileId)
+		return
+	}
 
-	service.on("singleTab", _ => console.log("Got single tab!"))
-	service.on("doubleTab", _ => console.log("Got double tab!"))
-	service.on("rssi", rssi => console.log("rssi", rssi))
-	service.on("tileRssi", rssi => console.log("tileRssi", rssi))
-	service.on("debug", msg => console.log("debug", msg))
+	await bleTile.authenticate(accTile)
 
-	await service.connect()
-	await service.sendRinger(TileVolume.MED)
+	bleTile.on("singleTab", _ => console.log("Got single tab!"))
+	bleTile.on("doubleTab", _ => console.log("Got double tab!"))
+	bleTile.on("rssi", rssi => console.log("rssi", rssi))
+	bleTile.on("tileRssi", rssi => console.log("tileRssi", rssi))
+
+	await bleTile.sendRinger(TileVolume.MED)
 });
 
 process.on('SIGINT', _ => {

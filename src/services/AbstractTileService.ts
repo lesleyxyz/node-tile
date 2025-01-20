@@ -22,8 +22,13 @@ export const BleGattMode = {
     DISCONNECTED: 9
 }
 
+// BLE Service to activate a new Tile
+export const FEEC_SERVICE: string = "0000feec-0000-1000-8000-00805f9b34fb"
+// BLE Service to communicate with a Tile
 export const FEED_SERVICE: string = "0000feed-0000-1000-8000-00805f9b34fb"
+// BLE Characteristic to send commands to a Tile
 export const MEP_COMMAND_CHAR: string = "9d410018-35d6-f4dd-ba60-e7bd8dc491c0"
+// BLE Characteristic to receive responses from a Tile
 export const MEP_RESPONSE_CHAR: string = "9d410019-35d6-f4dd-ba60-e7bd8dc491c0"
 // This Tile ID characteristic is not always present. It lives in the "deviceInfoService"
 // It is only present in newer tiles that have a PrivateId
@@ -55,11 +60,10 @@ export class AbstractTileService extends EventEmitter {
     diagData: Buffer
     ringingStateMachine: RingingStateMachine
     packetListeners = {}
-    onConnectedListener = _ => {}
+    onAuthenticatedListener = _ => {}
 
-    constructor(tile: Tile){
+    constructor(){
         super()
-        this.tile = tile
     }
 
     async connect(rssiTimeout = 2000){
@@ -71,11 +75,41 @@ export class AbstractTileService extends EventEmitter {
         this.emit("debug", `[${this.macAddress}] Connected`)
         await this.discoverServices()
         this.emit("debug", `Discovered services ${this.macAddress}`)
-        return new Promise(r => { this.onConnectedListener = r })
+
+        this.randA = CryptoUtils.generateRandomBytes(14)
+        this.toaMepProcessor = new ToaMepProcessor(CryptoUtils.generateRandomBytes(4))
+
+        this.bleGattMode = BleGattMode.CONNECTED_AND_SERVICES_DISCOVERED
     }
 
     async discoverServices(){
         throw Error("Not implemented")
+    }
+
+    isTile(){
+        throw Error("Not implemented")
+    }
+
+    isTileActivated(){
+        throw Error("Not implemented")
+    }
+
+    async getTileId() {
+        throw Error("Not implemented");
+    }
+
+    authenticate(tile: Tile){
+        this.tile = tile;
+
+        if(!this.isMepCmdOrRespSet()){
+            throw "BLE Characteristics not found :( is this a Tile?"
+        }
+
+        this.startTdiSequence()
+
+        return new Promise(r => {
+            this.onAuthenticatedListener = r;
+        });
     }
 
     getAuthKeyHmac(){
@@ -354,7 +388,7 @@ export class AbstractTileService extends EventEmitter {
 
         this.isNotifyAuthTripletSeen = true;
         await this.sendTcuRequest()
-        this.onConnectedListener("OK")
+        this.onAuthenticatedListener("OK")
     }
 
     async startTileRssiMonitoring(batchSize: number = 5) {

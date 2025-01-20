@@ -5,6 +5,7 @@ import { CryptoUtils } from '../utils/CryptoUtils.js'
 import {
     AbstractTileService,
     BleGattMode,
+    FEEC_SERVICE,
     FEED_SERVICE,
     MEP_COMMAND_CHAR,
     MEP_RESPONSE_CHAR,
@@ -18,9 +19,8 @@ export class TileServiceNoble extends AbstractTileService {
     mepResponseChar: Characteristic
     tileIdChar: Characteristic
 
-    constructor(peripheral: Peripheral, tile: Tile){
-        super(tile)
-        this.tile = tile
+    constructor(peripheral: Peripheral){
+        super()
         this.macAddress = peripheral.address
         this.peripheral = peripheral
         this.bleGattMode = BleGattMode.DISCONNECTED
@@ -39,6 +39,26 @@ export class TileServiceNoble extends AbstractTileService {
         return super.connect()
     }
 
+    isTile() {
+        let lowerServices = this.peripheral.advertisement.serviceUuids.map(s => s.toLowerCase())
+        return lowerServices.includes(FEED_SERVICE.slice(4, 8)) || lowerServices.includes(FEEC_SERVICE.slice(4, 8))
+    }
+
+    isTileActivated() {
+        let lowerServices = this.peripheral.advertisement.serviceUuids.map(s => s.toLowerCase())
+        return lowerServices.includes(FEED_SERVICE.slice(4, 8)) && !lowerServices.includes(FEEC_SERVICE.slice(4, 8))
+    }
+
+    async getTileId() {
+        // If the tileIdChar is not set, it does not use a Private ID, so return mac address
+        if(!this.tileIdChar){
+            return this.macAddress.replaceAll(":", "")
+        }
+
+        const tileId = await this.tileIdChar.readAsync()
+        return tileId.toString('hex')
+    }
+
     async discoverServices(){
         this.emit("debug", `[${this.macAddress}] Discovering services`)
         const services = await this.peripheral.discoverServicesAsync([]);
@@ -55,24 +75,19 @@ export class TileServiceNoble extends AbstractTileService {
 
         this.mepCommandChar = characteristics.filter(c => c.uuid == MEP_COMMAND_CHAR.replaceAll("-", ""))[0]
         this.mepResponseChar = characteristics.filter(c => c.uuid == MEP_RESPONSE_CHAR.replaceAll("-", ""))[0]
-
-        if(!this.isMepCmdOrRespSet()){
-            throw "BLE Characteristics not found :( is this a Tile?"
+        this.tileIdChar = characteristics.filter(c => c.uuid == TILE_ID_CHAR.replaceAll("-", ""))[0]
+        if(!this.tileIdChar){
+            this.emit("debug", `[${this.macAddress}] [FEED_SERVICE] Tile ID characteristic not found, Tile does not use Private ID`)
         }
 
-        this.randA = CryptoUtils.generateRandomBytes(14)
-        this.toaMepProcessor = new ToaMepProcessor(CryptoUtils.generateRandomBytes(4))
-
-        this.emit("debug", `[${this.macAddress}] [FEED_SERVICE] Subscribing to MEP Response`)
-
         this.mepResponseChar.on('data', this.onMepResponse.bind(this))
-        this.mepResponseChar.subscribe(error => {
-            if (error) {
-                throw error
-            }
-            this.emit("debug", `[${this.macAddress}] Subscribed to MEP Response`)
-            this.startTdiSequence()
-        });
+    }
+
+    async authenticate(tile: Tile){
+        this.emit("debug", `[${this.macAddress}] [FEED_SERVICE] Subscribing to MEP Response`)
+        await this.mepResponseChar.subscribeAsync()
+        this.emit("debug", `[${this.macAddress}] Subscribed to MEP Response`)
+        await super.authenticate(tile)
     }
 
     isMepCmdOrRespSet(): boolean {
