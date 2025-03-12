@@ -7,12 +7,16 @@ If you want to help research & reverse engineer the protocol further, see the `r
 ## Bluetooth Architecture
 Each tile has a service called "feed" with uuid `feed` or `0000feed-0000-1000-8000-00805f9b34fb`.
 
-This server has two characteristics:
+This service has two characteristics always available:
 MEP_COMMAND_CHAR with UUID `9d410018-35d6-f4dd-ba60-e7bd8dc491c0`
 => To send data to the tile
 
 MEP_RESPONSE_CHAR with UUID `9d410019-35d6-f4dd-ba60-e7bd8dc491c0`
 => To receive data from the tile
+
+The following characteristic MAY be available in the feed service depending on the tile:
+TILE_ID_CHAR with UUID `9d410007-35d6-f4dd-ba60-e7bd8dc491c0`
+=> To receive the tileId to match with the API response
 
 ## Communication methods
 Tile uses their own authentication for their tile.
